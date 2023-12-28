@@ -22,11 +22,17 @@ class TodosController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'name' => ['required'],
+            'description' => ['required'],
+            'isDone' => ['required'],
+        ]);
+
         $todo = new Todos();
 
-        $todo->name = $request->name;
-        $todo->description = $request->description;
-        $todo->isDone = $request->isDone;
+        $todo->name = $validatedData['name'];
+        $todo->description = $validatedData['description'];
+        $todo->isDone = $validatedData['isDone'];
 
         $todo->save();
 
